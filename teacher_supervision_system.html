@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Supervisi & Telaah Modul Ajar SD Petra Semarang</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="h-full bg-slate-50 text-slate-800 font-sans flex flex-col">
+
+    <!-- Top Header / Navigation -->
+    <header class="bg-indigo-900 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-indigo-800 p-2 rounded-xl border border-indigo-700 shadow-inner">
+                    <i class="fa-solid fa-school text-indigo-300 text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-base sm:text-lg leading-tight tracking-wide">Supervisi & Telaah Modul Ajar SD Petra Semarang</h1>
+                    <p class="text-xs text-indigo-300">Sistem Observasi Kelas & Telaah Pembelajaran Mendalam</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <div class="hidden md:flex items-center space-x-2 bg-indigo-800/60 px-3 py-1.5 rounded-lg border border-indigo-700/50 text-xs">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="text-indigo-200">Sistem Aktif</span>
+                </div>
+                <button onclick="openSyncModal()" class="bg-indigo-700 hover:bg-indigo-600 px-3.5 py-1.5 rounded-lg text-xs font-medium transition flex items-center space-x-2 border border-indigo-600 shadow-sm">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <span>Sinkronisasi Google Sites</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main App Container -->
+    <div class="flex-1 flex overflow-hidden">
+        
+        <!-- Sidebar Navigation Tabs -->
+        <aside class="w-64 bg-white border-r border-slate-200 flex flex-col justify-between hidden md:flex">
+            <div class="p-4 space-y-1">
+                <p class="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Menu Utama</p>
+                
+                <button onclick="switchTab('dashboard')" id="nav-dashboard" class="tab-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition bg-indigo-50 text-indigo-700">
+                    <i class="fa-solid fa-chart-pie w-5 text-center"></i>
+                    <span>Dashboard & Rekap</span>
+                </button>
+                
+                <button onclick="switchTab('perencanaan')" id="nav-perencanaan" class="tab-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                    <i class="fa-solid fa-file-lines w-5 text-center"></i>
+                    <span>Telaah Modul Ajar (RPP)</span>
+                </button>
+                
+                <button onclick="switchTab('supervisi')" id="nav-supervisi" class="tab-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                    <i class="fa-solid fa-clipboard-check w-5 text-center"></i>
+                    <span>Instrumen Supervisi Kelas</span>
+                </button>
+                
+                <button onclick="switchTab('umpanbalik')" id="nav-umpanbalik" class="tab-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                    <i class="fa-solid fa-comments w-5 text-center"></i>
+                    <span>Umpan Balik & Coaching</span>
+                </button>
+                
+                <button onclick="switchTab('asesmen')" id="nav-asesmen" class="tab-btn w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+                    <i class="fa-solid fa-graduation-cap w-5 text-center"></i>
+                    <span>Pemantauan Asesmen Siswa</span>
+                </button>
+            </div>
+            
+            <div class="p-4 border-t border-slate-100">
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs text-slate-500 space-y-1">
+                    <p class="font-semibold text-slate-700"><i class="fa-solid fa-shield-halved text-indigo-600 mr-1"></i> SD Petra Semarang</p>
+                    <p>Supervisi: 30 Indikator (Max 60)</p>
+                    <p>Telaah RPP: 19 Indikator (Max 38)</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 bg-slate-50" id="main-content-area">
+            
+            <!-- TAB 1: DASHBOARD -->
+            <div id="tab-dashboard" class="tab-content space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-900">Dashboard Supervisi & Telaah Pembelajaran</h2>
+                        <p class="text-sm text-slate-500">Ringkasan pelaksanaan telaah perangkat ajar dan observasi kelas SD Petra Semarang.</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="exportDataJSON()" class="bg-white border border-slate-300 hover:bg-slate-50 px-3.5 py-2 rounded-xl text-sm font-medium shadow-sm transition flex items-center space-x-2">
+                            <i class="fa-solid fa-download text-slate-500"></i>
+                            <span>Backup Data</span>
+                        </button>
+                        <button onclick="openSupervisiModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-sm font-medium shadow-sm transition flex items-center space-x-2">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Supervisi Baru</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-medium text-slate-500">Total Guru Dinilai</p>
+                            <h3 class="text-2xl font-bold text-slate-900" id="stat-total-guru">0</h3>
+                        </div>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-file-circle-check"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-medium text-slate-500">Modul Ajar Ditelaah</p>
+                            <h3 class="text-2xl font-bold text-slate-900" id="stat-total-rpp">0</h3>
+                        </div>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-star-half-stroke"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-medium text-slate-500">Rata-rata Nilai Supervisi</p>
+                            <h3 class="text-2xl font-bold text-slate-900" id="stat-avg-score">0.0</h3>
+                        </div>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs font-medium text-slate-500">Asesmen Tercatat</p>
+                            <h3 class="text-2xl font-bold text-slate-900" id="stat-total-asesmen">0</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Logs table -->
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+                        <h3 class="font-bold text-slate-900">Riwayat Observasi Kelas SD Petra</h3>
+                        <span class="text-xs text-slate-500">Data realtime sinkron</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-sm">
+                            <thead>
+                                <tr class="bg-slate-50 text-slate-600 font-semibold border-b border-slate-200 text-xs uppercase tracking-wider">
+                                    <th class="py-3 px-6">Nama Guru / Mapel</th>
+                                    <th class="py-3 px-6">Kelas / Tanggal</th>
+                                    <th class="py-3 px-6">Skor & Kategori</th>
+                                    <th class="py-3 px-6">Tindak Lanjut</th>
+                                    <th class="py-3 px-6 text-right">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dashboard-table-body" class="divide-y divide-slate-100 text-slate-700">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: TELAAH MODUL AJAR (RPP) -->
+            <div id="tab-perencanaan" class="tab-content space-y-6 hidden">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-900">Instrumen Telaah Modul Ajar Pembelajaran Mendalam</h2>
+                        <p class="text-sm text-slate-500">Penilaian kelayakan perangkat pembelajaran dengan 19 indikator resmi SD Petra.</p>
+                    </div>
+                    <button onclick="openRppModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-sm font-medium shadow-sm transition flex items-center space-x-2">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Telaah Modul Ajar Baru</span>
+                    </button>
+                </div>
+
+                <!-- GOOGLE DRIVE FOLDER ACCESS BANNER -->
+                <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-lg shrink-0">
+                            <i class="fa-brands fa-google-drive"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-emerald-900 text-sm">Penyimpanan Google Drive Modul Ajar Guru</h4>
+                            <p class="text-xs text-emerald-700 mt-0.5" id="drive-url-display">Belum ada tautan Drive yang disetel. Klik tombol atur untuk menghubungkan.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2 shrink-0">
+                        <button onclick="openDriveModal()" class="bg-white border border-emerald-300 text-emerald-800 hover:bg-emerald-100 px-3.5 py-2 rounded-xl text-xs font-semibold shadow-sm transition flex items-center space-x-1.5">
+                            <i class="fa-solid fa-gear"></i>
+                            <span>Atur Link Drive</span>
+                        </button>
+                        <a id="drive-link-btn" href="#" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-sm transition flex items-center space-x-1.5 opacity-50 pointer-events-none">
+                            <i class="fa-solid fa-external-link-alt"></i>
+                            <span>Buka Google Drive</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="rpp-grid">
+                    <!-- Dynamic RPP Cards -->
+                </div>
+            </div>
+
+            <!-- TAB 3: INSTRUMEN SUPERVISI KELAS SD PETRA -->
+            <div id="tab-supervisi" class="tab-content space-y-6 hidden">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-900">Instrumen Pengamatan Pembelajaran Mendalam</h2>
+                        <p class="text-sm text-slate-500">Standar Supervisi Akademik SD Petra Semarang (30 Indikator Revisi).</p>
+                    </div>
+                    <button onclick="openSupervisiModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-sm font-medium shadow-sm transition flex items-center space-x-2">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                        <span>Buat Penilaian Supervisi</span>
+                    </button>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pb-6 border-b border-slate-200">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Filter Guru</label>
+                            <select id="sup-filter-guru" onchange="renderSupervisiList()" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white">
+                                <option value="">Semua Guru</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2 flex items-end">
+                            <p class="text-xs text-slate-500 mb-1">Menampilkan rekam instrumen supervisi dengan skala 0, 1, dan 2.</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4" id="supervisi-list-container">
+                        <!-- Dynamic list of supervisi records -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: UMPAN BALIK & TINDAK LANJUT -->
+            <div id="tab-umpanbalik" class="tab-content space-y-6 hidden">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900">Umpan Balik & Rencana Tindak Lanjut</h2>
+                    <p class="text-sm text-slate-500">Catatan coaching dan pengembangan profesionalisme guru SD Petra.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6" id="feedback-container">
+                    <!-- Dynamic Feedback Cards -->
+                </div>
+            </div>
+
+            <!-- TAB 5: PEMANTAUAN ASESMEN SISWA -->
+            <div id="tab-asesmen" class="tab-content space-y-6 hidden">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-900">Pemantauan Hasil Asesmen Siswa</h2>
+                        <p class="text-sm text-slate-500">Rekapitulasi penilaian diagnostik, formatif, dan sumatif.</p>
+                    </div>
+                    <button onclick="openAsesmenModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-sm font-medium shadow-sm transition flex items-center space-x-2">
+                        <i class="fa-solid fa-chart-column"></i>
+                        <span>Input Rekap Asesmen</span>
+                    </button>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-sm">
+                            <thead>
+                                <tr class="bg-slate-50 text-slate-600 font-semibold border-b border-slate-200 text-xs uppercase tracking-wider">
+                                    <th class="py-3 px-6">Mata Pelajaran / Kelas</th>
+                                    <th class="py-3 px-6">Guru Pengampu</th>
+                                    <th class="py-3 px-6">Jenis Asesmen</th>
+                                    <th class="py-3 px-6">Rata-rata Nilai</th>
+                                    <th class="py-3 px-6">Tuntas KKTP (%)</th>
+                                    <th class="py-3 px-6 text-right">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="asesmen-table-body" class="divide-y divide-slate-100 text-slate-700">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- MODAL: GOOGLE DRIVE LINK MODUL AJAR -->
+    <div id="driveModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-slate-100">
+            <div class="flex items-center justify-between border-b border-slate-200 pb-4">
+                <h3 class="font-bold text-lg text-slate-900"><i class="fa-brands fa-google-drive text-emerald-600 mr-2"></i> Tautan Google Drive Modul Ajar</h3>
+                <button onclick="closeDriveModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="space-y-3 text-sm text-slate-600">
+                <p>Masukkan tautan folder Google Drive yang berisi arsip atau modul ajar guru SD Petra Semarang.</p>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">URL Folder Google Drive</label>
+                    <input type="url" id="drive-url-input" placeholder="https://drive.google.com/drive/folders/..." class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                </div>
+            </div>
+            <div class="flex justify-end space-x-3 pt-2 border-t border-slate-200">
+                <button type="button" onclick="closeDriveModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-xl text-sm transition">Batal</button>
+                <button type="button" onclick="saveDriveUrl()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-xl text-sm transition shadow-sm">Simpan Link Drive</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: SINKRONISASI GOOGLE SITES / APPS SCRIPT -->
+    <div id="syncModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 border border-slate-100">
+            <div class="flex items-center justify-between border-b border-slate-200 pb-4">
+                <h3 class="font-bold text-lg text-slate-900"><i class="fa-solid fa-cloud-arrow-up text-indigo-600 mr-2"></i> Integrasi Google Sites</h3>
+                <button onclick="closeSyncModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="space-y-4 text-sm text-slate-600">
+                <p>Aplikasi ini dapat disematkan ke dalam halaman <strong>Google Sites SD Petra</strong> menggunakan kode semat.</p>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">URL Web App Google Apps Script (Opsional)</label>
+                    <input type="text" id="gas-url-input" placeholder="https://script.google.com/macros/s/.../exec" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+                <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-100 space-y-2">
+                    <p class="font-semibold text-indigo-900 text-xs uppercase"><i class="fa-solid fa-code mr-1"></i> Kode Embed Google Sites</p>
+                    <textarea readonly class="w-full h-20 bg-white p-2 rounded border border-indigo-200 text-xs font-mono text-slate-700 select-all">&lt;iframe src="URL_HOSTING_ANDA" width="100%" height="800px" style="border:none;"&gt;&lt;/iframe&gt;</textarea>
+                </div>
+            </div>
+            <div class="flex justify-end space-x-3 pt-2">
+                <button onclick="closeSyncModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-xl text-sm transition">Tutup</button>
+                <button onclick="saveGasUrl()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl text-sm transition shadow-sm">Simpan Konfigurasi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: TELAAH MODUL AJAR (19 INDIKATOR) -->
+    <div id="rppModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-4xl w-full p-6 shadow-2xl space-y-6 border border-slate-100 max-h-[92vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-slate-200 pb-4 sticky top-0 bg-white z-10">
+                <div>
+                    <h3 class="font-bold text-lg text-slate-900">INSTRUMEN TELAAH MODUL AJAR PEMBELAJARAN MENDALAM</h3>
+                    <p class="text-xs text-indigo-600 font-medium">SD PETRA SEMARANG • 19 Indikator (Skor Max: 38)</p>
+                </div>
+                <button onclick="closeRppModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <form id="rpp-form" onsubmit="handleRppSubmit(event)" class="space-y-6">
+                <input type="hidden" id="rpp-id">
+                
+                <!-- Identitas Telaah Modul -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Nama Guru</label>
+                        <input type="text" id="rpp-guru" required placeholder="Cth: Maria Susanti, S.Pd" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm bg-white focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Kelas / Semester</label>
+                        <input type="text" id="rpp-kelas" required placeholder="Cth: Kelas 4 / Sem 2" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm bg-white focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Fase / Mapel</label>
+                        <input type="text" id="rpp-mapel" required placeholder="Cth: Fase B / Tematik" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm bg-white focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Tema / Topik</label>
+                        <input type="text" id="rpp-topik" required placeholder="Cth: Energi & Perubahannya" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm bg-white focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                </div>
+
+                <!-- 19 Indikator Tabel -->
+                <div class="overflow-x-auto border border-slate-200 rounded-2xl">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead>
+                            <tr class="bg-indigo-900 text-white text-xs uppercase tracking-wider">
+                                <th class="py-3 px-4 w-12 text-center">No</th>
+                                <th class="py-3 px-4">Komponen & Aspek Telaah Modul Ajar</th>
+                                <th class="py-3 px-4 w-16 text-center">0 (Tidak)</th>
+                                <th class="py-3 px-4 w-16 text-center">1 (Kurang)</th>
+                                <th class="py-3 px-4 w-16 text-center">2 (Sesuai)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 text-slate-700 bg-white" id="rpp-indicator-table-body">
+                            <!-- Dynamic 19 RPP indicators -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Live Score Card RPP -->
+                <div class="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div>
+                        <p class="text-xs font-bold text-indigo-900 uppercase">Rumus Nilai Telaah RPP:</p>
+                        <p class="text-xs text-indigo-700">(Total Skor / 38) × 100 = <span id="live-rpp-skor-akhir" class="font-bold text-base">0</span></p>
+                        <p class="text-xs text-indigo-800 mt-1">Kategori: <span id="live-rpp-kategori" class="font-bold uppercase bg-white px-2 py-0.5 rounded border border-indigo-200">-</span></p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs text-slate-500">Total Diperoleh</p>
+                        <span id="live-rpp-total-skor" class="text-2xl font-extrabold text-indigo-900">0</span> / 38
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Catatan Penelaah / Kepala SD Petra</label>
+                    <textarea id="rpp-catatan" rows="3" placeholder="Catatan penguatan perangkat ajar..." class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500"></textarea>
+                </div>
+
+                <div class="flex justify-end space-x-3 pt-4 border-t border-slate-200">
+                    <button type="button" onclick="closeRppModal()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-xl text-sm transition">Batal</button>
+                    <button type="submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl text-sm transition shadow-sm">Simpan Telaah Modul Ajar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: INSTRUMEN SUPERVISI KELAS (30 INDIKATOR REVISI) -->
+    <div id="supervisiModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-4xl w-full p-6 shadow-2xl space-y-6 border border-slate-100 max-h-[92vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-slate-200 pb-4 sticky top-0 bg-white z-10">
+                <div>
+                    <h3 class="font-bold text-lg text-slate-900">INSTRUMEN PENGAMATAN PELAKSANAAN PEMBELAJARAN MENDALAM</h3>
+                    <p class="text-xs text-indigo-600 font-medium">SD PETRA SEMARANG • 30 Indikator Revisi (Skor Max: 60)</p>
+                </div>
+                <button onclick="closeSupervisiModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <form id="supervisi-form" onsubmit="handleSupervisiSubmit(event)" class="space-y-6">
+                <input type="hidden" id="sup-id">
+                
+                <!-- Header Identitas Guru -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Nama Guru</label>
+                        <input type="text" id="sup-guru" required placeholder="Cth: Maria Susanti, S.Pd" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm bg-white focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Kelas / Semester</label>
+                        <input type="text" id="sup-kelas" required placeholder="Cth: Kelas 4 / Sem 2" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm bg-white focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Mata Pelajaran</label>
+                        <input type="text" id="sup-mapel" required placeholder="Cth: Tematik" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm bg-white focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Hari / Tanggal</label>
+                        <input type="date" id="sup-tanggal" required class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm bg-white focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Materi / Topik</label>
+                        <input type="text" id="sup-materi" required placeholder="Cth: Energi Alternatif" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm bg-white focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Pertemuan Ke- / Alokasi Waktu</label>
+                        <input type="text" id="sup-pertemuan" placeholder="Cth: Pertemuan 1 / 2x35 Menit" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm bg-white focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Kepala Sekolah / Observer</label>
+                        <input type="text" id="sup-observer" required value="Liony Surya Munika, S.Psi" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm bg-white focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                </div>
+
+                <!-- INSTRUMEN TABEL 30 INDIKATOR REVISI -->
+                <div class="space-y-6">
+                    <div class="overflow-x-auto border border-slate-200 rounded-2xl">
+                        <table class="w-full text-left border-collapse text-sm">
+                            <thead>
+                                <tr class="bg-indigo-900 text-white text-xs uppercase tracking-wider">
+                                    <th class="py-3 px-4 w-12 text-center">No</th>
+                                    <th class="py-3 px-4">Aspek & Indikator Pengamatan Pembelajaran Mendalam</th>
+                                    <th class="py-3 px-4 w-16 text-center">0</th>
+                                    <th class="py-3 px-4 w-16 text-center">1</th>
+                                    <th class="py-3 px-4 w-16 text-center">2</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 text-slate-700 bg-white" id="indicator-table-body">
+                                <!-- Dynamic 30 Indicators inserted via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Live Score Card Supervisi -->
+                <div class="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div>
+                        <p class="text-xs font-bold text-indigo-900 uppercase">Rumus Nilai Supervisi SD Petra:</p>
+                        <p class="text-xs text-indigo-700">(Total Skor / 60) × 100 = <span id="live-skor-akhir" class="font-bold text-base">0</span></p>
+                        <p class="text-xs text-indigo-800 mt-1">Kategori: <span id="live-kategori" class="font-bold uppercase bg-white px-2 py-0.5 rounded border border-indigo-200">-</span></p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-xs text-slate-500">Total Diperoleh</p>
+                        <span id="live-total-skor" class="text-2xl font-extrabold text-indigo-900">0</span> / 60
+                    </div>
+                </div>
+
+                <!-- Catatan & Tindak Lanjut -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Catatan Hasil Observasi</label>
+                        <textarea id="sup-catatan" rows="3" placeholder="Catatan pelaksanaan pembelajaran di kelas..." class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Rencana Tindak Lanjut (Action Plan)</label>
+                        <textarea id="sup-tindak-lanjut" rows="3" placeholder="Rekomendasi pengembangan kompetensi..." class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500"></textarea>
+                    </div>
+                </div>
+
+                <div class="flex justify-end space-x-3 pt-4 border-t border-slate-200">
+                    <button type="button" onclick="closeSupervisiModal()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-xl text-sm transition">Batal</button>
+                    <button type="submit" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl text-sm transition shadow-sm">Simpan Instrumen Supervisi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: ASESMEN SISWA -->
+    <div id="asesmenModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 border border-slate-100">
+            <div class="flex items-center justify-between border-b border-slate-200 pb-4">
+                <h3 class="font-bold text-lg text-slate-900">Input Rekap Asesmen Siswa</h3>
+                <button onclick="closeAsesmenModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form id="asesmen-form" onsubmit="handleAsesmenSubmit(event)" class="space-y-4">
+                <input type="hidden" id="asesmen-id">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Mata Pelajaran</label>
+                        <input type="text" id="asesmen-mapel" required placeholder="Cth: Tematik" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Kelas</label>
+                        <input type="text" id="asesmen-kelas" required placeholder="Cth: Kelas 4" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Guru Pengampu</label>
+                        <input type="text" id="asesmen-guru" required placeholder="Cth: Maria Susanti, S.Pd" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Jenis Asesmen</label>
+                        <select id="asesmen-jenis" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white">
+                            <option value="Diagnostik Awal">Diagnostik Awal</option>
+                            <option value="Formatif Bab">Formatif Bab</option>
+                            <option value="Sumatif Tengah Semester">Sumatif Tengah Semester (STS)</option>
+                            <option value="Sumatif Akhir Semester">Sumatif Akhir Semester (SAS)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Rata-rata Nilai (0-100)</label>
+                        <input type="number" step="0.1" min="0" max="100" id="asesmen-rata" required placeholder="Cth: 85.0" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Tuntas KKTP (%)</label>
+                        <input type="number" min="0" max="100" id="asesmen-tuntas" required placeholder="Cth: 90" class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Catatan Tindak Lanjut Asesmen</label>
+                    <textarea id="asesmen-catatan" rows="3" placeholder="Analisis pengayaan / remedial..." class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+                </div>
+                <div class="flex justify-end space-x-3 pt-2 border-t border-slate-200">
+                    <button type="button" onclick="closeAsesmenModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded-xl text-sm transition">Batal</button>
+                    <button type="submit" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl text-sm transition shadow-sm">Simpan Rekap Asesmen</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // 19 Indikator Telaah Modul Ajar (RPP) SD Petra Semarang
+        const rppIndicators = [
+            { section: 'A. INFORMASI UMUM' },
+            { id: 1, text: 'Terdapat: Identitas (nama satuan pendidikan, nama guru, kelas/semester, mata pelajaran, dan alokasi waktu)' },
+            
+            { section: 'B. IDENTIFIKASI' },
+            { id: 2, text: 'Terdapat jumlah peserta didik, materi pelajaran, dan Dimensi Profil Lulusan (Keimanan dan Ketakwaan terhadap Tuhan Yang Maha Esa, Kewargaan, Penalaran Kritis, Kreativitas, Kolaborasi, Kemandirian, Kesehatan, dan Komunikasi)' },
+            
+            { section: 'C. DESAIN PEMBELAJARAN' },
+            { id: 3, text: 'Capaian Pembelajaran' },
+            { id: 4, text: 'Christian Worldview Integration' },
+            { id: 5, text: 'Tujuan Pembelajaran (mencakup subjek belajar, pengetahuan/keterampilan/sikap terukur, kondisi/konteks, serta tingkat indikator pencapaian)' },
+            { id: 6, text: 'Topik Pembelajaran' },
+            { id: 7, text: 'Praktik Pedagogis (Model/strategi/metode untuk mencapai tujuan belajar dalam mencapai dimensi profil lulusan)' },
+            { id: 8, text: 'Kemitraan Pembelajaran (Mitra kerjasama untuk berkolaborasi dan berperan dalam pembelajaran)' },
+            { id: 9, text: 'Lingkungan Pembelajaran (Ruang fisik, virtual, dan budaya belajar)' },
+            { id: 10, text: 'Pemanfaatan Digital (Teknologi digital interaktif, kolaboratif, dan kontekstual)' },
+            
+            { section: 'D. PENGALAMAN BELAJAR' },
+            { id: 11, text: 'Kegiatan Awal (Orientasi bermakna, apersepsi kontekstual, motivasi menggembirakan)' },
+            { id: 12, text: 'Kegiatan Inti (Prinsip mindful, meaningful, joyful, serta tahapan memahami, mengaplikasi, merefleksi)' },
+            { id: 13, text: 'Kegiatan Penutup (Umpan balik konstruktif, simpulan, keterlibatan siswa dalam perencanaan selanjutnya)' },
+            
+            { section: 'E. ASESMEN PEMBELAJARAN' },
+            { id: 14, text: 'Asesmen pada awal pembelajaran' },
+            { id: 15, text: 'Asesmen pada proses pembelajaran' },
+            { id: 16, text: 'Asesmen pada akhir pembelajaran' },
+            
+            { section: 'F. LAMPIRAN' },
+            { id: 17, text: 'Lembar Kerja Peserta Didik (LKPD)' },
+            { id: 18, text: 'Pengayaan dan Remedial' },
+            { id: 19, text: 'Rubrik Penilaian' }
+        ];
+
+        // 30 Indikator Revisi Supervisi Pelaksanaan Pembelajaran SD Petra Semarang
+        const petraIndicators = [
+            // A. Kegiatan Pendahuluan
+            { section: 'A. KEGIATAN PENDAHULUAN' },
+            { id: 1, text: 'Memotivasi murid dalam memulai pembelajaran' },
+            { id: 2, text: 'Mengkondisikan suasana belajar yang nyaman (pengaturan tempat duduk, media, kesiapan alat bantu pembelajaran)' },
+            { id: 3, text: 'Melakukan orientasi yang bermakna, apersepsi yang kontekstual, menyampaikan tujuan, Christian Worldview Integration, Dimensi Profil Lulusan yang ingin dicapai, cakupan materi dan skenario kegiatan pembelajaran' },
+            { id: 4, text: 'Mengajukan pertanyaan pemantik untuk menstimulus rasa ingin tahu siswa terkait materi yang akan dipelajari' },
+            
+            // B. Kegiatan Inti
+            { section: 'B. KEGIATAN INTI' },
+            { sub: '1. Kemampuan Memfasilitasi Pembelajaran' },
+            { id: 5, text: 'a. Menguasai materi pembelajaran' },
+            { id: 6, text: 'b. Menyajikan materi secara sistematis' },
+            { id: 7, text: 'c. Menguasai kelas' },
+            { id: 8, text: 'd. Melaksanakan pembelajaran sesuai dengan alokasi waktu yang direncanakan' },
+            
+            { sub: '2. Pelibatan Peserta Didik dalam Pembelajaran' },
+            { id: 9, text: 'a. Menumbuhkan partisipasi aktif murid dalam kegiatan belajar' },
+            { id: 10, text: 'b. Merespon positif partisipasi murid' },
+            { id: 11, text: 'c. Menumbuhkan antusiasme murid dalam belajar' },
+            { id: 12, text: 'd. Menumbuhkan semangat berkolaborasi murid' },
+            { id: 13, text: 'e. Melaksanakan pembelajaran yang memungkinkan tumbuhnya kebiasaan positif (nurturant effect)' },
+            { id: 14, text: 'f. Menanamkan keyakinan kelas dan 7 KAIH' },
+
+            { sub: '3. Pemanfaatan Media/Sumber Belajar dalam Pembelajaran' },
+            { id: 15, text: 'a. Menunjukkan keterampilan dalam penggunaan media belajar digital' },
+            { id: 16, text: 'b. Menunjukkan keterampilan dalam penggunaan sumber pembelajaran' },
+            { id: 17, text: 'c. Melibatkan murid dalam pemanfaatan media belajar' },
+
+            { sub: '4. Praktik Pembelajaran yang Berpihak pada Murid dan Mendalam' },
+            { id: 18, text: 'a. Menerapkan model pembelajaran yang sesuai untuk mencapai tujuan belajar dalam mencapai dimensi profil lulusan' },
+            { id: 19, text: 'b. Menerapkan tahapan aspek memahami, mengaplikasi, dan merefleksi' },
+            { id: 20, text: 'c. Menerapkan prinsip joyful, mindful, dan meaningful' },
+            { id: 21, text: 'd. Melibatkan kemitraan pembelajaran' },
+
+            { sub: '5. Pelaksanaan Penilaian Pembelajaran' },
+            { id: 22, text: 'a. Melaksanakan penilaian diagnostik' },
+            { id: 23, text: 'b. Melaksanakan penilaian formatif' },
+            { id: 24, text: 'c. Melaksanakan penilaian sumatif' },
+
+            { sub: '6. Penggunaan Bahasa yang Benar dan Tepat dalam Pembelajaran' },
+            { id: 25, text: 'a. Menggunakan bahasa lisan secara jelas dan lancar' },
+            { id: 26, text: 'b. Menggunakan bahasa tulis yang baik dan benar' },
+            { id: 27, text: 'c. Menyampaikan pesan dengan gaya yang sesuai' },
+
+            // C. Kegiatan Penutup
+            { section: 'C. KEGIATAN PENUTUP' },
+            { id: 28, text: 'Melakukan refleksi' },
+            { id: 29, text: 'Membuat simpulan dengan melibatkan murid' },
+            { id: 30, text: 'Melaksanakan tindak lanjut dengan memberikan arahan kegiatan lanjutan atau tugas' }
+        ];
+
+        // State Management
+        let appState = {
+            gasUrl: localStorage.getItem('sup_gas_url') || '',
+            driveUrl: localStorage.getItem('sup_drive_url') || '',
+            rppList: JSON.parse(localStorage.getItem('sup_rpp_list')) || [
+                { 
+                    id: 'rpp_1', guru: 'Maria Susanti, S.Pd', mapel: 'Fase B / Tematik', kelas: 'Kelas 4 / Sem 2', topik: 'Energi & Perubahannya', 
+                    scores: Array(19).fill(2), skorTotal: 38, skorAkhir: 100.0, kategori: 'AMAT BAIK',
+                    catatan: 'Modul ajar sangat lengkap sesuai dengan prinsip pembelajaran mendalam.'
+                }
+            ],
+            supervisiList: JSON.parse(localStorage.getItem('sup_supervisi_list')) || [
+                { 
+                    id: 's1', guru: 'Maria Susanti, S.Pd', mapel: 'Tematik', kelas: 'Kelas 4', tanggal: '2026-03-15', 
+                    materi: 'Energi Alternatif', pertemuan: 'Pertemuan 1', observer: 'Liony Surya Munika, S.Psi',
+                    scores: Array(30).fill(2), skorTotal: 60, skorAkhir: 100.0, kategori: 'SANGAT BAIK',
+                    catatan: 'Pembelajaran sangat interaktif dan menyenangkan bagi siswa.',
+                    tindakLanjut: 'Pertahankan praktik baik penggunaan media digital.'
+                }
+            ],
+            asesmenList: JSON.parse(localStorage.getItem('sup_asesmen_list')) || [
+                { id: 'a1', mapel: 'Tematik', kelas: 'Kelas 4', guru: 'Maria Susanti, S.Pd', jenis: 'Formatif Bab', rata: 88.5, tuntas: 92, catatan: 'Sebagian besar siswa mencapai KKTP.' }
+            ]
+        };
+
+        // Tab Switching
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('bg-indigo-50', 'text-indigo-700');
+                el.classList.add('text-slate-600', 'hover:bg-slate-100', 'hover:text-slate-900');
+            });
+
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`nav-${tabId}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-slate-600', 'hover:bg-slate-100', 'hover:text-slate-900');
+                activeBtn.classList.add('bg-indigo-50', 'text-indigo-700');
+            }
+
+            renderAll();
+        }
+
+        // Persistence
+        function persistData() {
+            localStorage.setItem('sup_gas_url', appState.gasUrl);
+            localStorage.setItem('sup_drive_url', appState.driveUrl);
+            localStorage.setItem('sup_rpp_list', JSON.stringify(appState.rppList));
+            localStorage.setItem('sup_supervisi_list', JSON.stringify(appState.supervisiList));
+            localStorage.setItem('sup_asesmen_list', JSON.stringify(appState.asesmenList));
+
+            if (appState.gasUrl) {
+                fetch(appState.gasUrl, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(appState)
+                }).catch(err => console.log('Apps Script background sync:', err));
+            }
+        }
+
+        window.onload = function() {
+            document.getElementById('gas-url-input').value = appState.gasUrl;
+            document.getElementById('drive-url-input').value = appState.driveUrl;
+            buildRppIndicatorTable();
+            buildIndicatorTable();
+            renderAll();
+        };
+
+        // Google Drive Link Management
+        function openDriveModal() { document.getElementById('driveModal').classList.remove('hidden'); }
+        function closeDriveModal() { document.getElementById('driveModal').classList.add('hidden'); }
+        function saveDriveUrl() {
+            appState.driveUrl = document.getElementById('drive-url-input').value.trim();
+            persistData();
+            closeDriveModal();
+            renderDriveLinkInfo();
+            alert('Tautan Google Drive Modul Ajar berhasil disimpan!');
+        }
+
+        function renderDriveLinkInfo() {
+            const displayEl = document.getElementById('drive-url-display');
+            const btnEl = document.getElementById('drive-link-btn');
+            
+            if (appState.driveUrl) {
+                displayEl.innerHTML = `Tautan aktif: <a href="${appState.driveUrl}" target="_blank" class="underline font-medium text-emerald-900">${appState.driveUrl}</a>`;
+                btnEl.href = appState.driveUrl;
+                btnEl.classList.remove('opacity-50', 'pointer-events-none');
+            } else {
+                displayEl.innerText = 'Belum ada tautan Drive yang disetel. Klik tombol atur untuk menghubungkan.';
+                btnEl.href = '#';
+                btnEl.classList.add('opacity-50', 'pointer-events-none');
+            }
+        }
+
+        // Build 19 RPP Indicators Table
+        function buildRppIndicatorTable() {
+            const tbody = document.getElementById('rpp-indicator-table-body');
+            tbody.innerHTML = '';
+
+            rppIndicators.forEach((item) => {
+                if (item.section) {
+                    tbody.innerHTML += `
+                        <tr class="bg-indigo-50/70 font-bold text-indigo-900 text-xs">
+                            <td colspan="5" class="py-2.5 px-4">${item.section}</td>
+                        </tr>
+                    `;
+                } else {
+                    let idx = item.id - 1;
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="py-2 px-4 text-center font-medium text-xs text-slate-500">${item.id}</td>
+                            <td class="py-2 px-4 text-xs text-slate-700">${item.text}</td>
+                            <td class="py-2 px-4 text-center"><input type="radio" name="rpp_ind_${idx}" value="0" checked onchange="calculateRppLiveScore()" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500"></td>
+                            <td class="py-2 px-4 text-center"><input type="radio" name="rpp_ind_${idx}" value="1" onchange="calculateRppLiveScore()" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500"></td>
+                            <td class="py-2 px-4 text-center"><input type="radio" name="rpp_ind_${idx}" value="2" onchange="calculateRppLiveScore()" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500"></td>
+                        </tr>
+                    `;
+                }
+            });
+            calculateRppLiveScore();
+        }
+
+        function calculateRppLiveScore() {
+            let total = 0;
+            rppIndicators.forEach(item => {
+                if (item.id) {
+                    let radios = document.getElementsByName(`rpp_ind_${item.id - 1}`);
+                    for (let r of radios) {
+                        if (r.checked) total += parseInt(r.value) || 0;
+                    }
+                }
+            });
+
+            // Formula: (Total / 38) * 100
+            let skorAkhir = ((total / 38) * 100).toFixed(1);
+            let kategori = getRppCategory(parseFloat(skorAkhir));
+
+            document.getElementById('live-rpp-total-skor').innerText = total;
+            document.getElementById('live-rpp-skor-akhir').innerText = skorAkhir;
+            let katEl = document.getElementById('live-rpp-kategori');
+            katEl.innerText = kategori;
+
+            if (kategori === 'AMAT BAIK') katEl.className = 'font-bold uppercase bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded border border-emerald-200';
+            else if (kategori === 'BAIK') katEl.className = 'font-bold uppercase bg-blue-100 text-blue-800 px-2 py-0.5 rounded border border-blue-200';
+            else if (kategori === 'CUKUP') katEl.className = 'font-bold uppercase bg-amber-100 text-amber-800 px-2 py-0.5 rounded border border-amber-200';
+            else katEl.className = 'font-bold uppercase bg-rose-100 text-rose-800 px-2 py-0.5 rounded border border-rose-200';
+
+            return { total, skorAkhir: parseFloat(skorAkhir), kategori };
+        }
+
+        function getRppCategory(score) {
+            if (score > 90) return 'AMAT BAIK';
+            if (score > 80) return 'BAIK';
+            if (score > 70) return 'CUKUP';
+            return 'KURANG';
+        }
+
+        // Build 30 Indicators Table in Supervisi Modal
+        function buildIndicatorTable() {
+            const tbody = document.getElementById('indicator-table-body');
+            tbody.innerHTML = '';
+
+            petraIndicators.forEach((item) => {
+                if (item.section) {
+                    tbody.innerHTML += `
+                        <tr class="bg-indigo-50/70 font-bold text-indigo-900 text-xs">
+                            <td colspan="5" class="py-2.5 px-4">${item.section}</td>
+                        </tr>
+                    `;
+                } else if (item.sub) {
+                    tbody.innerHTML += `
+                        <tr class="bg-slate-100 font-semibold text-slate-800 text-xs">
+                            <td colspan="5" class="py-2 px-4 pl-6">${item.sub}</td>
+                        </tr>
+                    `;
+                } else {
+                    let idx = item.id - 1;
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="py-2 px-4 text-center font-medium text-xs text-slate-500">${item.id}</td>
+                            <td class="py-2 px-4 text-xs text-slate-700">${item.text}</td>
+                            <td class="py-2 px-4 text-center"><input type="radio" name="ind_${idx}" value="0" checked onchange="calculateLiveScore()" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500"></td>
+                            <td class="py-2 px-4 text-center"><input type="radio" name="ind_${idx}" value="1" onchange="calculateLiveScore()" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500"></td>
+                            <td class="py-2 px-4 text-center"><input type="radio" name="ind_${idx}" value="2" onchange="calculateLiveScore()" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500"></td>
+                        </tr>
+                    `;
+                }
+            });
+            calculateLiveScore();
+        }
+
+        function calculateLiveScore() {
+            let total = 0;
+            petraIndicators.forEach(item => {
+                if (item.id) {
+                    let radios = document.getElementsByName(`ind_${item.id - 1}`);
+                    for (let r of radios) {
+                        if (r.checked) total += parseInt(r.value) || 0;
+                    }
+                }
+            });
+
+            // Formula: (Total / 60) * 100
+            let skorAkhir = ((total / 60) * 100).toFixed(1);
+            let kategori = getCategory(parseFloat(skorAkhir));
+
+            document.getElementById('live-total-skor').innerText = total;
+            document.getElementById('live-skor-akhir').innerText = skorAkhir;
+            let katEl = document.getElementById('live-kategori');
+            katEl.innerText = kategori;
+
+            if (kategori === 'SANGAT BAIK') katEl.className = 'font-bold uppercase bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded border border-emerald-200';
+            else if (kategori === 'BAIK') katEl.className = 'font-bold uppercase bg-blue-100 text-blue-800 px-2 py-0.5 rounded border border-blue-200';
+            else if (kategori === 'CUKUP') katEl.className = 'font-bold uppercase bg-amber-100 text-amber-800 px-2 py-0.5 rounded border border-amber-200';
+            else katEl.className = 'font-bold uppercase bg-rose-100 text-rose-800 px-2 py-0.5 rounded border border-rose-200';
+
+            return { total, skorAkhir: parseFloat(skorAkhir), kategori };
+        }
+
+        function getCategory(score) {
+            if (score >= 90) return 'SANGAT BAIK';
+            if (score >= 80) return 'BAIK';
+            if (score >= 70) return 'CUKUP';
+            return 'KURANG';
+        }
+
+        function renderAll() {
+            renderDashboardStats();
+            renderDashboardTable();
+            renderRppGrid();
+            renderSupervisiFilterOptions();
+            renderSupervisiList();
+            renderFeedbackContainer();
+            renderAsesmenTable();
+            renderDriveLinkInfo();
+        }
+
+        // 1. Dashboard
+        function renderDashboardStats() {
+            const uniqueTeachers = new Set([
+                ...appState.rppList.map(r => r.guru),
+                ...appState.supervisiList.map(s => s.guru),
+                ...appState.asesmenList.map(a => a.guru)
+            ]);
+            document.getElementById('stat-total-guru').innerText = uniqueTeachers.size;
+            document.getElementById('stat-total-rpp').innerText = appState.rppList.length;
+            
+            let totalScore = appState.supervisiList.reduce((acc, curr) => acc + curr.skorAkhir, 0);
+            let avg = appState.supervisiList.length > 0 ? (totalScore / appState.supervisiList.length).toFixed(1) : '0.0';
+            document.getElementById('stat-avg-score').innerText = avg;
+            document.getElementById('stat-total-asesmen').innerText = appState.asesmenList.length;
+        }
+
+        function renderDashboardTable() {
+            const tbody = document.getElementById('dashboard-table-body');
+            tbody.innerHTML = '';
+
+            if (appState.supervisiList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-slate-400 text-sm">Belum ada data supervisi tercatat.</td></tr>`;
+                return;
+            }
+
+            appState.supervisiList.forEach(item => {
+                let badgeColor = item.kategori === 'SANGAT BAIK' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : (item.kategori === 'BAIK' ? 'bg-blue-50 text-blue-700 border-blue-200' : 'bg-amber-50 text-amber-700 border-amber-200');
+                
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-6">
+                            <p class="font-semibold text-slate-900">${item.guru}</p>
+                            <p class="text-xs text-slate-500">${item.mapel}</p>
+                        </td>
+                        <td class="py-3 px-6">
+                            <p class="text-slate-700">${item.kelas}</p>
+                            <p class="text-xs text-slate-400">${item.tanggal}</p>
+                        </td>
+                        <td class="py-3 px-6">
+                            <span class="px-2.5 py-1 rounded-lg border text-xs font-bold ${badgeColor}">${item.skorAkhir} (${item.kategori})</span>
+                        </td>
+                        <td class="py-3 px-6 text-xs text-slate-600">
+                            ${item.tindakLanjut || '-'}
+                        </td>
+                        <td class="py-3 px-6 text-right">
+                            <button onclick="deleteSupervisi('${item.id}')" class="text-slate-400 hover:text-rose-600 p-1 rounded transition" title="Hapus Data">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // 2. Telaah Modul Ajar (RPP) Grid & Modal
+        function renderRppGrid() {
+            const grid = document.getElementById('rpp-grid');
+            grid.innerHTML = '';
+
+            if (appState.rppList.length === 0) {
+                grid.innerHTML = `<div class="col-span-full py-8 text-center text-slate-400 text-sm bg-white rounded-2xl border border-slate-200">Belum ada data telaah modul ajar.</div>`;
+                return;
+            }
+
+            appState.rppList.forEach(item => {
+                let badgeColor = item.kategori === 'AMAT BAIK' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-blue-50 text-blue-700 border-blue-200';
+                grid.innerHTML += `
+                    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col justify-between space-y-4">
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold border ${badgeColor}">${item.skorAkhir} (${item.kategori})</span>
+                                <span class="text-xs text-slate-400">Total: ${item.skorTotal}/38</span>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-base leading-snug">${item.topik}</h3>
+                                <p class="text-xs text-indigo-600 font-medium mt-0.5">${item.mapel} - ${item.kelas}</p>
+                            </div>
+                            <div class="pt-1">
+                                <p class="text-xs font-semibold text-slate-700">Guru: <span class="font-normal text-slate-600">${item.guru}</span></p>
+                                <p class="text-xs text-slate-500 mt-1 italic bg-slate-50 p-2 rounded-lg border border-slate-100">"${item.catatan || '-'}"</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-end pt-3 border-t border-slate-100 text-xs">
+                            <button onclick="deleteRpp('${item.id}')" class="text-slate-400 hover:text-rose-600 p-1 flex items-center space-x-1"><i class="fa-solid fa-trash"></i><span>Hapus</span></button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function openRppModal() {
+            document.getElementById('rpp-form').reset();
+            document.getElementById('rpp-id').value = '';
+            buildRppIndicatorTable();
+            document.getElementById('rppModal').classList.remove('hidden');
+        }
+        function closeRppModal() { document.getElementById('rppModal').classList.add('hidden'); }
+
+        function handleRppSubmit(e) {
+            e.preventDefault();
+            let scores = [];
+            rppIndicators.forEach(item => {
+                if (item.id) {
+                    let val = 0;
+                    let radios = document.getElementsByName(`rpp_ind_${item.id - 1}`);
+                    for (let r of radios) {
+                        if (r.checked) val = parseInt(r.value) || 0;
+                    }
+                    scores.push(val);
+                }
+            });
+
+            let live = calculateRppLiveScore();
+
+            let data = {
+                id: 'rpp_' + Date.now(),
+                guru: document.getElementById('rpp-guru').value,
+                kelas: document.getElementById('rpp-kelas').value,
+                mapel: document.getElementById('rpp-mapel').value,
+                topik: document.getElementById('rpp-topik').value,
+                scores: scores,
+                skorTotal: live.total,
+                skorAkhir: live.skorAkhir,
+                kategori: live.kategori,
+                catatan: document.getElementById('rpp-catatan').value
+            };
+            appState.rppList.unshift(data);
+            persistData();
+            closeRppModal();
+            renderAll();
+        }
+
+        function deleteRpp(id) {
+            if (confirm('Hapus data telaah modul ajar ini?')) {
+                appState.rppList = appState.rppList.filter(r => r.id !== id);
+                persistData();
+                renderAll();
+            }
+        }
+
+        // 3. Supervisi Kelas SD Petra (30 Indikator)
+        function renderSupervisiFilterOptions() {
+            const select = document.getElementById('sup-filter-guru');
+            let currentVal = select.value;
+            let teachers = [...new Set(appState.supervisiList.map(s => s.guru))];
+            select.innerHTML = '<option value="">Semua Guru</option>';
+            teachers.forEach(t => {
+                select.innerHTML += `<option value="${t}">${t}</option>`;
+            });
+            select.value = currentVal;
+        }
+
+        function renderSupervisiList() {
+            const container = document.getElementById('supervisi-list-container');
+            const filterGuru = document.getElementById('sup-filter-guru').value;
+            container.innerHTML = '';
+
+            let filtered = appState.supervisiList;
+            if (filterGuru) filtered = filtered.filter(s => s.guru === filterGuru);
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="py-8 text-center text-slate-400 text-sm">Tidak ada data observasi kelas ditemukan.</div>`;
+                return;
+            }
+
+            filtered.forEach(item => {
+                container.innerHTML += `
+                    <div class="bg-slate-50 rounded-2xl border border-slate-200 p-5 space-y-3">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-slate-200 pb-3">
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-base">${item.guru}</h4>
+                                <p class="text-xs text-slate-500">${item.mapel} • Kelas: <span class="font-medium text-slate-700">${item.kelas}</span> • Materi: ${item.materi} (${item.tanggal})</p>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <span class="px-3 py-1 rounded-xl border bg-white text-indigo-700 font-bold text-sm shadow-sm">Skor: ${item.skorAkhir} (${item.kategori})</span>
+                                <button onclick="deleteSupervisi('${item.id}')" class="text-slate-400 hover:text-rose-600 p-1"><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                        </div>
+                        <div class="text-xs space-y-1 bg-white p-3 rounded-xl border border-slate-200">
+                            <p class="font-semibold text-slate-700"><i class="fa-solid fa-comment-dots text-indigo-600 mr-1"></i> Catatan:</p>
+                            <p class="text-slate-600">${item.catatan || '-'}</p>
+                            <p class="font-semibold text-slate-700 mt-2"><i class="fa-solid fa-arrow-trend-up text-emerald-600 mr-1"></i> Tindak Lanjut:</p>
+                            <p class="text-slate-600">${item.tindakLanjut || '-'}</p>
+                            <p class="text-[10px] text-slate-400 text-right mt-1">Observer: ${item.observer}</p>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function openSupervisiModal() {
+            document.getElementById('supervisi-form').reset();
+            document.getElementById('sup-id').value = '';
+            document.getElementById('sup-tanggal').value = new Date().toISOString().split('T')[0];
+            buildIndicatorTable();
+            document.getElementById('supervisiModal').classList.remove('hidden');
+        }
+
+        function closeSupervisiModal() {
+            document.getElementById('supervisiModal').classList.add('hidden');
+        }
+
+        function handleSupervisiSubmit(e) {
+            e.preventDefault();
+            let scores = [];
+            petraIndicators.forEach(item => {
+                if (item.id) {
+                    let val = 0;
+                    let radios = document.getElementsByName(`ind_${item.id - 1}`);
+                    for (let r of radios) {
+                        if (r.checked) val = parseInt(r.value) || 0;
+                    }
+                    scores.push(val);
+                }
+            });
+
+            let live = calculateLiveScore();
+
+            let data = {
+                id: 'sup_' + Date.now(),
+                guru: document.getElementById('sup-guru').value,
+                kelas: document.getElementById('sup-kelas').value,
+                mapel: document.getElementById('sup-mapel').value,
+                tanggal: document.getElementById('sup-tanggal').value,
+                materi: document.getElementById('sup-materi').value,
+                pertemuan: document.getElementById('sup-pertemuan').value,
+                observer: document.getElementById('sup-observer').value,
+                scores: scores,
+                skorTotal: live.total,
+                skorAkhir: live.skorAkhir,
+                kategori: live.kategori,
+                catatan: document.getElementById('sup-catatan').value,
+                tindakLanjut: document.getElementById('sup-tindak-lanjut').value
+            };
+
+            appState.supervisiList.unshift(data);
+            persistData();
+            closeSupervisiModal();
+            renderAll();
+        }
+
+        function deleteSupervisi(id) {
+            if (confirm('Hapus instrumen supervisi ini?')) {
+                appState.supervisiList = appState.supervisiList.filter(s => s.id !== id);
+                persistData();
+                renderAll();
+            }
+        }
+
+        // 4. Umpan Balik
+        function renderFeedbackContainer() {
+            const container = document.getElementById('feedback-container');
+            container.innerHTML = '';
+
+            if (appState.supervisiList.length === 0) {
+                container.innerHTML = `<div class="col-span-full py-8 text-center text-slate-400 text-sm bg-white rounded-2xl border border-slate-200">Belum ada data coaching.</div>`;
+                return;
+            }
+
+            appState.supervisiList.forEach(item => {
+                container.innerHTML += `
+                    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                            <div>
+                                <h3 class="font-bold text-slate-900">${item.guru}</h3>
+                                <p class="text-xs text-slate-500">${item.mapel} • ${item.kelas} • ${item.materi}</p>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-xl bg-indigo-50 text-indigo-700 text-xs font-bold border border-indigo-100">${item.skorAkhir} (${item.kategori})</span>
+                        </div>
+                        <div class="space-y-3 text-sm">
+                            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-1">
+                                <p class="text-xs font-semibold text-slate-700 uppercase"><i class="fa-solid fa-comments text-indigo-600 mr-1"></i> Catatan Observasi</p>
+                                <p class="text-slate-600 text-xs leading-relaxed">${item.catatan || '-'}</p>
+                            </div>
+                            <div class="bg-emerald-50/50 p-3.5 rounded-xl border border-emerald-100 space-y-1">
+                                <p class="text-xs font-semibold text-emerald-800 uppercase"><i class="fa-solid fa-bullseye text-emerald-600 mr-1"></i> Rencana Tindak Lanjut</p>
+                                <p class="text-emerald-900 text-xs font-medium">${item.tindakLanjut || '-'}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between pt-2 text-xs text-slate-400 border-t border-slate-100">
+                            <span>Observer: ${item.observer}</span>
+                            <span>Tanggal: ${item.tanggal}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // 5. Asesmen Siswa
+        function renderAsesmenTable() {
+            const tbody = document.getElementById('asesmen-table-body');
+            tbody.innerHTML = '';
+
+            if (appState.asesmenList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="py-6 text-center text-slate-400 text-sm">Belum ada rekap asesmen siswa tercatat.</td></tr>`;
+                return;
+            }
+
+            appState.asesmenList.forEach(item => {
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-6">
+                            <p class="font-semibold text-slate-900">${item.mapel}</p>
+                            <p class="text-xs text-slate-500">${item.kelas}</p>
+                        </td>
+                        <td class="py-3 px-6 text-slate-700">${item.guru}</td>
+                        <td class="py-3 px-6"><span class="px-2 py-0.5 rounded-lg bg-slate-100 text-slate-700 text-xs">${item.jenis}</span></td>
+                        <td class="py-3 px-6 font-bold text-slate-900">${item.rata}</td>
+                        <td class="py-3 px-6"><span class="px-2.5 py-1 rounded-lg border text-xs font-bold text-emerald-600 bg-emerald-50 border-emerald-200">${item.tuntas}% Tuntas</span></td>
+                        <td class="py-3 px-6 text-right">
+                            <button onclick="deleteAsesmen('${item.id}')" class="text-slate-400 hover:text-rose-600 p-1 rounded transition"><i class="fa-solid fa-trash-can"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function openAsesmenModal() {
+            document.getElementById('asesmen-form').reset();
+            document.getElementById('asesmen-id').value = '';
+            document.getElementById('asesmenModal').classList.remove('hidden');
+        }
+        function closeAsesmenModal() { document.getElementById('asesmenModal').classList.add('hidden'); }
+        function handleAsesmenSubmit(e) {
+            e.preventDefault();
+            let data = {
+                id: 'asesmen_' + Date.now(),
+                mapel: document.getElementById('asesmen-mapel').value,
+                kelas: document.getElementById('asesmen-kelas').value,
+                guru: document.getElementById('asesmen-guru').value,
+                jenis: document.getElementById('asesmen-jenis').value,
+                rata: parseFloat(document.getElementById('asesmen-rata').value),
+                tuntas: parseInt(document.getElementById('asesmen-tuntas').value),
+                catatan: document.getElementById('asesmen-catatan').value
+            };
+            appState.asesmenList.unshift(data);
+            persistData();
+            closeAsesmenModal();
+            renderAll();
+        }
+        function deleteAsesmen(id) {
+            if (confirm('Hapus rekap asesmen ini?')) {
+                appState.asesmenList = appState.asesmenList.filter(a => a.id !== id);
+                persistData();
+                renderAll();
+            }
+        }
+
+        // Sync & Backup
+        function openSyncModal() { document.getElementById('syncModal').classList.remove('hidden'); }
+        function closeSyncModal() { document.getElementById('syncModal').classList.add('hidden'); }
+        function saveGasUrl() {
+            appState.gasUrl = document.getElementById('gas-url-input').value.trim();
+            localStorage.setItem('sup_gas_url', appState.gasUrl);
+            closeSyncModal();
+            alert('Konfigurasi Google Apps Script berhasil disimpan!');
+        }
+        function exportDataJSON() {
+            let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState, null, 2));
+            let dlAnchor = document.createElement('a');
+            dlAnchor.setAttribute("href", dataStr);
+            dlAnchor.setAttribute("download", `supervisi_sd_petra_semarang_${new Date().toISOString().split('T')[0]}.json`);
+            document.body.appendChild(dlAnchor);
+            dlAnchor.click();
+            dlAnchor.remove();
+        }
+    </script>
+</body>
+</html>
